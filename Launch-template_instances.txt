@@ -1,0 +1,10 @@
+#! /bin/bash
+I=1
+sgids='sg-0a09a2534946b01ec'
+for subnet in 'subnet-03dc2dd78baac6d57' 'subnet-0734ef259b7872cba'
+do 
+echo "Create EC2 instance in $subnet ..."
+aws ec2 run-instances --instance-type t2.micro --launch-template LauchTemplateId=lt-0c527d3d0d87f1a84 --security-group-ids $sgids --subnet-id $subnet --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=launchtemp-srv-'${I}'}]' >> /dev/null 2>&1
+echo "Created EC2 server with name Launchtmp-srv-${I}"
+I=$((I+1))
+done
